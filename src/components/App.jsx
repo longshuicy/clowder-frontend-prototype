@@ -16,9 +16,9 @@ export default function App(props) {
 	const classes = useStyles();
 
 	const [datasetId, setDatasetId] = useState("");
-	const [allFiles, setAllFiles] = useState([]);
 	const [selectedFileId, setSelectedFileId] = useState("");
 	const [fileMetadataList, setFileMetadataList] = useState([]);
+	const [thumbnailList, setThumbnailList] = useState([]);
 
 	const [paths, setPaths] = useState(["explore", "collection", "dataset", ""]);
 
@@ -50,22 +50,23 @@ export default function App(props) {
 		if (filesInDataset !== undefined && filesInDataset.length > 0){
 			// empty list
 			setFileMetadataList([]);
-			setAllFiles([]);
+			setThumbnailList([]);
+
 			filesInDataset.map(async (fileInDataset) => {
 				let fileMetadata = await fetchFileMetadata(fileInDataset["id"]);
 				setFileMetadataList(fileMetadataList => [
 					...fileMetadataList, {"id":fileInDataset["id"], "metadata": fileMetadata}
 				]);
 
-				// add thumbnails to list of files
-				let fileInfo = fileInDataset;
+				// add thumbnails
 				if (fileMetadata["thumbnail"] !== null && fileMetadata["thumbnail"] !== undefined){
 					let thumbnailURL = await downloadThumbnail(fileMetadata["thumbnail"]);
 					if (thumbnailURL !== null){
-						fileInfo["thumbnail"] = thumbnailURL;
+						setThumbnailList(thumbnailList => [...thumbnailList,
+							{"id":fileInDataset["id"], "thumbnail": thumbnailURL}
+							]);
 					}
 				}
-				setAllFiles(allFiles => [ ...allFiles, fileInfo]);
 			});
 		}
 	}, [filesInDataset])
@@ -89,7 +90,8 @@ export default function App(props) {
 					selectedFileId === "" ?
 						// Dataset page
 						<Dataset selectFile={selectFile}
-								 files={allFiles}
+								 files={filesInDataset}
+								 thumbnails={thumbnailList}
 								 about={datasetAbout}
 						/>
 						:

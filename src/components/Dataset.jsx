@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Dataset(props) {
 	const classes = useStyles();
 
-	const {files, about, selectFile,	...other} = props;
+	const {files, thumbnails, about, selectFile,	...other} = props;
 
 	const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
@@ -44,24 +44,28 @@ export default function Dataset(props) {
 					</AppBar>
 					<TabPanel value={selectedTabIndex} index={0}>
 						{
-							files !== undefined && files.length > 0 ?
+							files !== undefined && files.length > 0 && thumbnails !== undefined ?
 								files.map((file) => {
-									return (
-										<Box className={"fileCard"}>
-											{ file["thumbnail"] !== null  && file["thumbnail"] !== undefined ?
-												<img src={file["thumbnail"]} alt="thumbnail"/>
-												:
-												<></>
-											}
-											<Button color="inherit"
-													onClick={() => selectFile(file["id"])}>
-												{file["filename"]}</Button>
-											<Typography>{file["size"]}</Typography>
-											<Typography>{file["data-created"]}</Typography>
-											<Typography>{file["filePath"]}</Typography>
-											<Typography>{file["contentType"]}</Typography>
-										</Box>
-									)
+									thumbnails.map((thumbnail) =>{
+										if (file["id"] === thumbnail["id"]){
+											return (
+												<Box className={"fileCard"}>
+													{ thumbnail["thumbnail"] !== null  && thumbnail["thumbnail"] !== undefined ?
+														<img src={thumbnail["thumbnail"]} alt="thumbnail"/>
+														:
+														<></>
+													}
+													<Button color="inherit"
+															onClick={() => selectFile(file["id"])}>
+														{file["filename"]}</Button>
+													<Typography>{file["size"]}</Typography>
+													<Typography>{file["data-created"]}</Typography>
+													<Typography>{file["filePath"]}</Typography>
+													<Typography>{file["contentType"]}</Typography>
+												</Box>
+											)
+										}
+									})
 								})
 								:
 								<></>
