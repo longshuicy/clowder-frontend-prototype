@@ -4,6 +4,7 @@ import Breadcrumbs from "./childComponents/BreadCrumb";
 import {makeStyles} from "@material-ui/core/styles";
 import File from "./File";
 import Dataset from "./Dataset";
+import {fetchFileMetadata} from "../utils/file";
 
 const useStyles = makeStyles((theme) => ({
 
@@ -13,12 +14,14 @@ export default function App(props) {
 	const classes = useStyles();
 
 	const [datasetId, setDatasetId] = useState("");
-	const [fileId, setFileId] = useState("");
+	const [allFiles, setAllFiles] = useState([]);
+	const [selectedFileId, setSelectedFileId] = useState("");
+	const [fileMetadataList, setFileMetadataList] = useState([]);
+
 	const [paths, setPaths] = useState(["explore", "collection", "dataset", ""]);
 
 	const {
 		// files
-		listFileMetadata, fileMetadata,
 		listFileExtractedMetadata, fileExtractedMetadata,
 		listFileMetadataJsonld, fileMetadataJsonld,
 		listFilePreviews, filePreviews,
@@ -35,25 +38,40 @@ export default function App(props) {
 		listDatasetAbout();
 	}, []);
 
+	// // set breadcrumbs
+	// useEffect(() => {
+	// 	setPaths(paths => [...paths.slice(0, paths.length - 1), fileMetadata["filename"]]);
+	// }, [fileMetadata]);
+
+	// get metadata of each files; because we need the thumbnail of each file!!!
 	useEffect(() => {
-		// set breadcrumbs
-		setPaths(paths => [...paths.slice(0, paths.length - 1), fileMetadata["filename"]]);
-	}, [fileMetadata]);
+		if (filesInDataset !== undefined && filesInDataset.length > 0){
+			// empty list
+			setFileMetadataList([]);
+			setAllFiles([]);
+			filesInDataset.map(async (fileInDataset) => {
+				let fileMetadata = await fetchFileMetadata(fileInDataset["id"]);
+				setFileMetadataList(fileMetadataList => [
+					...fileMetadataList, {"id":fileInDataset["id"], "metadata": fileMetadata}
+				]);
+
+				// add thumbnails to list of files
+				let fileInfo = fileInDataset;
+				fileInfo["thumbnail"] = fileMetadata["thumbnail"];
+				setAllFiles(allFiles => [ ...allFiles, fileInfo]);
+			});
+		}
+	}, [filesInDataset])
 
 	const selectFile = (selectedFileId) => {
 		// pass that id to file component
-		setFileId(selectedFileId);
+		setSelectedFileId(selectedFileId);
 
 		// load file information
-		listFileMetadata(selectedFileId);
 		listFileExtractedMetadata(selectedFileId);
 		listFileMetadataJsonld(selectedFileId);
 		listFilePreviews(selectedFileId);
 	}
-
-	const handleTabChange = (event, newTabIndex) => {
-		setSelectedTabIndex(newTabIndex);
-	};
 
 	return (
 		<div>
@@ -61,20 +79,25 @@ export default function App(props) {
 			<div className="outer-container">
 				<Breadcrumbs paths={paths}/>
 				{
-					fileId === "" ?
+					selectedFileId === "" ?
 						// Dataset page
 						<Dataset selectFile={selectFile}
-								 files={filesInDataset}
+								 files={allFiles}
 								 about={datasetAbout}
 						/>
 						:
 						// file page
-						<File fileMetadata={fileMetadata}
-							  fileExtractedMetadata={fileExtractedMetadata}
-							  fileMetadataJsonld={fileMetadataJsonld}
-							  filePreviews={filePreviews}
-							  fileId={fileId}/>
-
+						fileMetadataList.map((fileMetadata) =>{
+							if (selectedFileId === fileMetadata["id"]){
+								return (
+									<File fileMetadata={fileMetadata["metadata"]}
+										  fileExtractedMetadata={fileExtractedMetadata}
+										  fileMetadataJsonld={fileMetadataJsonld}
+										  filePreviews={filePreviews}
+										  fileId={selectedFileId}/>
+								)
+							}
+						})
 				}
 			</div>
 		</div>

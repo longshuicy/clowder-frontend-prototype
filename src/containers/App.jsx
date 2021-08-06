@@ -14,7 +14,6 @@ import {
 
 const mapStateToProps = (state) => {
 	return {
-		fileMetadata: state.file.metadata,
 		fileExtractedMetadata: state.file.extractedMetadata,
 		fileMetadataJsonld: state.file.metadataJsonld,
 		filePreviews: state.file.previews,
@@ -25,9 +24,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		listFileMetadata: (fileId) => {
-			dispatch(fetchFileMetadata(fileId));
-		},
 		listFileExtractedMetadata: (fileId) => {
 			dispatch(fetchFileExtractedMetadata(fileId));
 		},

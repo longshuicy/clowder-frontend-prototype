@@ -48,6 +48,7 @@ export default function Dataset(props) {
 								files.map((file) => {
 									return (
 										<Box className={"fileCard"}>
+											<h1>thumbnail:{file["thumbnail"]}</h1>
 											<Button color="inherit"
 													onClick={() => selectFile(file["id"])}>{file["filename"]}</Button>
 											<Typography>{file["size"]}</Typography>
@@ -71,15 +72,14 @@ export default function Dataset(props) {
 						about !== undefined ?
 							<Box className="infoCard">
 								<Typography className="title">About</Typography>
+								<Typography className="content">Owner: {about["authorId"]}</Typography>
 								<Typography className="content">Description: {about["description"]}</Typography>
 								<Typography className="content">Created on: {about["created"]}</Typography>
-								{/*TODO use this to get thumbnail*/}
+								{/*/!*TODO use this to get thumbnail*!/*/}
 								<Typography className="content">Thumbnail: {about["thumbnail"]}</Typography>
-								{/*TODO use this to get author info*/}
-								<Typography className="content">Author id: {about["authorId"]}</Typography>
-								<Typography className="content">Belongs to spaces: {about["authorId"]}</Typography>
-								{/*TODO not sure how to use this info*/}
-								<Typography className="content">Resource type: {about["resource_type"]}</Typography>
+								{/*<Typography className="content">Belongs to spaces: {about["authorId"]}</Typography>*/}
+								{/*/!*TODO not sure how to use this info*!/*/}
+								{/*<Typography className="content">Resource type: {about["resource_type"]}</Typography>*/}
 							</Box> : <></>
 					}
 					<Divider light/>
