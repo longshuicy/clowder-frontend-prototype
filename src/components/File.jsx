@@ -89,9 +89,7 @@ export default function File(props) {
 	};
 
 	return (
-		<div>
-			{/*tabs*/}
-			<div className="inner-container">
+		<div className="inner-container">
 				<Grid container spacing={4}>
 					<Grid item lg={8} sm={8} xl={8} xs={12}>
 						<AppBar className={classes.appBar} position="static">
@@ -192,7 +190,6 @@ export default function File(props) {
 					</Grid>
 				</Grid>
 			</div>
-		</div>
 	);
 }
 
