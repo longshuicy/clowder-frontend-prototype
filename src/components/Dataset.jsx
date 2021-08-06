@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {AppBar, Box, Button, Grid, Tab, Tabs, Typography} from "@material-ui/core";
+import {AppBar, Box, Button, Divider, Grid, Tab, Tabs, Typography} from "@material-ui/core";
+import {ClowderInput} from "./styledComponents/ClowderInput";
+import {ClowderButton} from "./styledComponents/ClowderButton";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -19,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Dataset(props) {
 	const classes = useStyles();
 
-	const {files, selectFile,	...other} = props;
+	const {files, about, selectFile,	...other} = props;
 
 	const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
@@ -58,24 +60,50 @@ export default function Dataset(props) {
 								:
 								<></>
 						}
-
-						{/*<Button color="inherit" onClick={() => selectFile("59933ae8e4b04cf488f47aba")}>PDF*/}
-						{/*	File</Button>*/}
-						{/*<Button color="inherit" onClick={() => selectFile("5d974f435e0eb9edf7b3cf00")}>Audio*/}
-						{/*	File</Button>*/}
-						{/*<Button color="inherit" onClick={() => selectFile("59933ae9e4b04cf488f47b48")}>Video*/}
-						{/*	File</Button>*/}
-						{/*<Button color="inherit" onClick={() => selectFile("576b0b1ce4b0e899329e8553")}>Image*/}
-						{/*	File</Button>*/}
-						{/*<Button color="inherit" onClick={() => selectFile("60ee08325e0e3ff9d746bc57")}>Three D*/}
-						{/*	File</Button>*/}
 					</TabPanel>
 					<TabPanel value={selectedTabIndex} index={1}></TabPanel>
 					<TabPanel value={selectedTabIndex} index={2}></TabPanel>
 					<TabPanel value={selectedTabIndex} index={3}></TabPanel>
 					<TabPanel value={selectedTabIndex} index={4}></TabPanel>
 				</Grid>
-				<Grid item lg={4} sm={4} xl={4} xs={12}></Grid>
+				<Grid item lg={4} sm={4} xl={4} xs={12}>
+					{
+						about !== undefined ?
+							<Box className="infoCard">
+								<Typography className="title">About</Typography>
+								<Typography className="content">Description: {about["description"]}</Typography>
+								<Typography className="content">Created on: {about["created"]}</Typography>
+								{/*TODO use this to get thumbnail*/}
+								<Typography className="content">Thumbnail: {about["thumbnail"]}</Typography>
+								{/*TODO use this to get author info*/}
+								<Typography className="content">Author id: {about["authorId"]}</Typography>
+								<Typography className="content">Belongs to spaces: {about["authorId"]}</Typography>
+								{/*TODO not sure how to use this info*/}
+								<Typography className="content">Resource type: {about["resource_type"]}</Typography>
+							</Box> : <></>
+					}
+					<Divider light/>
+					<Box className="infoCard">
+						<Typography className="title">Statistics</Typography>
+						<Typography className="content">Views: 10</Typography>
+						<Typography className="content">Last viewed: Jun 07, 2021 21:49:09</Typography>
+						<Typography className="content">Downloads: 0</Typography>
+						<Typography className="content">Last downloaded: Never</Typography>
+					</Box>
+					<Divider light/>
+					<Box className="infoCard">
+						<Typography className="title">Tags</Typography>
+						<Grid container spacing={4}>
+							<Grid item lg={8} sm={8} xl={8} xs={12}>
+								<ClowderInput defaultValue="Tag"/>
+							</Grid>
+							<Grid item lg={4} sm={4} xl={4} xs={12}>
+								<ClowderButton>Search</ClowderButton>
+							</Grid>
+						</Grid>
+					</Box>
+					<Divider light/>
+				</Grid>
 			</Grid>
 		</div>
 	);

@@ -17,17 +17,22 @@ export default function App(props) {
 	const [paths, setPaths] = useState(["explore", "collection", "dataset", ""]);
 
 	const {
+		// files
 		listFileMetadata, fileMetadata,
 		listFileExtractedMetadata, fileExtractedMetadata,
 		listFileMetadataJsonld, fileMetadataJsonld,
 		listFilePreviews, filePreviews,
+
+		//dataset
 		listFilesInDataset, filesInDataset,
+		listDatasetAbout, datasetAbout,
 		...other
 	} = props;
 
 	// component did mount
 	useEffect(() => {
 		listFilesInDataset();
+		listDatasetAbout();
 	}, []);
 
 	useEffect(() => {
@@ -58,7 +63,10 @@ export default function App(props) {
 				{
 					fileId === "" ?
 						// Dataset page
-						<Dataset selectFile={selectFile} files={filesInDataset} />
+						<Dataset selectFile={selectFile}
+								 files={filesInDataset}
+								 about={datasetAbout}
+						/>
 						:
 						// file page
 						<File fileMetadata={fileMetadata}

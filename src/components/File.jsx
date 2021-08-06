@@ -153,10 +153,10 @@ export default function File(props) {
 						<Divider light/>
 						<Box className="infoCard">
 							<Typography className="title">Statistics</Typography>
-							<Typography className="content">Views:10</Typography>
-							<Typography className="content">Last viewed:Jun 07, 2021 21:49:09</Typography>
-							<Typography className="content">Downloads:0</Typography>
-							<Typography className="content">Last downloaded:Never</Typography>
+							<Typography className="content">Views: 10</Typography>
+							<Typography className="content">Last viewed: Jun 07, 2021 21:49:09</Typography>
+							<Typography className="content">Downloads: 0</Typography>
+							<Typography className="content">Last downloaded: Never</Typography>
 						</Box>
 						<Divider light/>
 						<Box className="infoCard">

@@ -8,7 +8,8 @@ import {
 } from "../actions/file";
 
 import {
-	fetchFilesInDataset
+	fetchFilesInDataset,
+	fetchDatasetAbout
 } from "../actions/dataset";
 
 const mapStateToProps = (state) => {
@@ -17,26 +18,30 @@ const mapStateToProps = (state) => {
 		fileExtractedMetadata: state.file.extractedMetadata,
 		fileMetadataJsonld: state.file.metadataJsonld,
 		filePreviews: state.file.previews,
-		filesInDataset: state.dataset.files
+		filesInDataset: state.dataset.files,
+		datasetAbout: state.dataset.about
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		listFileMetadata: (id) => {
-			dispatch(fetchFileMetadata(id));
+		listFileMetadata: (fileId) => {
+			dispatch(fetchFileMetadata(fileId));
 		},
-		listFileExtractedMetadata: (id) => {
-			dispatch(fetchFileExtractedMetadata(id));
+		listFileExtractedMetadata: (fileId) => {
+			dispatch(fetchFileExtractedMetadata(fileId));
 		},
-		listFileMetadataJsonld: (id) => {
-			dispatch(fetchFileMetadataJsonld(id));
+		listFileMetadataJsonld: (fileId) => {
+			dispatch(fetchFileMetadataJsonld(fileId));
 		},
 		listFilePreviews: (fileId) => {
 			dispatch(fetchFilePreviews(fileId));
 		},
 		listFilesInDataset: (datasetId) => {
 			dispatch(fetchFilesInDataset(datasetId));
+		},
+		listDatasetAbout: (datasetId) => {
+			dispatch(fetchDatasetAbout(datasetId));
 		}
 	};
 };

@@ -33,6 +33,7 @@ body {
 .infoCard .content{
 	font-size: 14px;
 	color: #000000;
+	margin-bottom:2px;
 }
 
 .appBar {
