@@ -21,8 +21,14 @@ export default function App(props) {
 		listFileExtractedMetadata, fileExtractedMetadata,
 		listFileMetadataJsonld, fileMetadataJsonld,
 		listFilePreviews, filePreviews,
+		listFilesInDataset, filesInDataset,
 		...other
 	} = props;
+
+	// component did mount
+	useEffect(() => {
+		listFilesInDataset();
+	}, []);
 
 	useEffect(() => {
 		// set breadcrumbs

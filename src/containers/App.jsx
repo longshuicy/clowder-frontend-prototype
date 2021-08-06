@@ -7,12 +7,17 @@ import {
 	fetchFilePreviews
 } from "../actions/file";
 
+import {
+	fetchFilesInDataset
+} from "../actions/dataset";
+
 const mapStateToProps = (state) => {
 	return {
 		fileMetadata: state.file.metadata,
 		fileExtractedMetadata: state.file.extractedMetadata,
 		fileMetadataJsonld: state.file.metadataJsonld,
 		filePreviews: state.file.previews,
+		filesInDataset: state.dataset.files
 	};
 };
 
@@ -29,6 +34,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		listFilePreviews: (fileId) => {
 			dispatch(fetchFilePreviews(fileId));
+		},
+		listFilesInDataset: (datasetId) => {
+			dispatch(fetchFilesInDataset(datasetId));
 		}
 	};
 };
