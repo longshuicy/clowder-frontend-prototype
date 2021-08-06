@@ -3,9 +3,6 @@ import {makeStyles} from "@material-ui/core/styles";
 import {AppBar, Box, Button, Grid, Tab, Tabs, Typography} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-	root: {
-		flexGrow: 1,
-	},
 	appBar: {
 		background: "#FFFFFF",
 		boxShadow: "none",
@@ -16,26 +13,6 @@ const useStyles = makeStyles((theme) => ({
 		fontSize: "16px",
 		color: "#495057",
 		textTransform: "capitalize",
-	},
-	fileCard:{
-		border: "1px solid #DFDFDF",
-		boxSizing: "border-box",
-		borderRadius: "4px",
-		padding:"40px",
-		margin:"25px auto"
-	},
-	infoCard: {
-		padding: "48px 0",
-	},
-	title: {
-		fontWeight: "600",
-		fontSize: "16px",
-		color: "#000000",
-		marginBottom: "8px"
-	},
-	content: {
-		fontSize: "14px",
-		color: "#000000",
 	}
 }));
 
@@ -68,7 +45,7 @@ export default function Dataset(props) {
 							files !== undefined && files.length > 0 ?
 								files.map((file) => {
 									return (
-										<Box className={classes.fileCard}>
+										<Box className={"fileCard"}>
 											<Button color="inherit"
 													onClick={() => selectFile(file["id"])}>{file["filename"]}</Button>
 											<Typography>{file["size"]}</Typography>
