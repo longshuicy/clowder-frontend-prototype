@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-export default function Dataset(props) {
+export default function App(props) {
 	const classes = useStyles();
 
 	const [fileId, setFileId] = useState("");
