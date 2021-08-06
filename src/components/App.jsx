@@ -58,7 +58,7 @@ export default function App(props) {
 				{
 					fileId === "" ?
 						// Dataset page
-						<Dataset selectFile={selectFile}/>
+						<Dataset selectFile={selectFile} files={filesInDataset} />
 						:
 						// file page
 						<File fileMetadata={fileMetadata}

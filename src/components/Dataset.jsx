@@ -17,6 +17,13 @@ const useStyles = makeStyles((theme) => ({
 		color: "#495057",
 		textTransform: "capitalize",
 	},
+	fileCard:{
+		border: "1px solid #DFDFDF",
+		boxSizing: "border-box",
+		borderRadius: "4px",
+		padding:"40px",
+		margin:"25px auto"
+	},
 	infoCard: {
 		padding: "48px 0",
 	},
@@ -34,9 +41,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dataset(props) {
 	const classes = useStyles();
-	const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
-	const {selectFile,	...other} = props;
+	const {files, selectFile,	...other} = props;
+
+	const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
 	const handleTabChange = (event, newTabIndex) => {
 		setSelectedTabIndex(newTabIndex);
@@ -56,18 +64,34 @@ export default function Dataset(props) {
 						</Tabs>
 					</AppBar>
 					<TabPanel value={selectedTabIndex} index={0}>
-						<Button color="inherit" onClick={() => selectFile("60ee082d5e0e3ff9d746b5fc")}>Text
-							File</Button>
-						<Button color="inherit" onClick={() => selectFile("59933ae8e4b04cf488f47aba")}>PDF
-							File</Button>
-						<Button color="inherit" onClick={() => selectFile("5d974f435e0eb9edf7b3cf00")}>Audio
-							File</Button>
-						<Button color="inherit" onClick={() => selectFile("59933ae9e4b04cf488f47b48")}>Video
-							File</Button>
-						<Button color="inherit" onClick={() => selectFile("576b0b1ce4b0e899329e8553")}>Image
-							File</Button>
-						<Button color="inherit" onClick={() => selectFile("60ee08325e0e3ff9d746bc57")}>Three D
-							File</Button>
+						{
+							files !== undefined && files.length > 0 ?
+								files.map((file) => {
+									return (
+										<Box className={classes.fileCard}>
+											<Button color="inherit"
+													onClick={() => selectFile(file["id"])}>{file["filename"]}</Button>
+											<Typography>{file["size"]}</Typography>
+											<Typography>{file["data-created"]}</Typography>
+											<Typography>{file["filePath"]}</Typography>
+											<Typography>{file["contentType"]}</Typography>
+										</Box>
+									)
+								})
+								:
+								<></>
+						}
+
+						{/*<Button color="inherit" onClick={() => selectFile("59933ae8e4b04cf488f47aba")}>PDF*/}
+						{/*	File</Button>*/}
+						{/*<Button color="inherit" onClick={() => selectFile("5d974f435e0eb9edf7b3cf00")}>Audio*/}
+						{/*	File</Button>*/}
+						{/*<Button color="inherit" onClick={() => selectFile("59933ae9e4b04cf488f47b48")}>Video*/}
+						{/*	File</Button>*/}
+						{/*<Button color="inherit" onClick={() => selectFile("576b0b1ce4b0e899329e8553")}>Image*/}
+						{/*	File</Button>*/}
+						{/*<Button color="inherit" onClick={() => selectFile("60ee08325e0e3ff9d746bc57")}>Three D*/}
+						{/*	File</Button>*/}
 					</TabPanel>
 					<TabPanel value={selectedTabIndex} index={1}></TabPanel>
 					<TabPanel value={selectedTabIndex} index={2}></TabPanel>
