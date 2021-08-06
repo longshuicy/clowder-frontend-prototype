@@ -48,9 +48,14 @@ export default function Dataset(props) {
 								files.map((file) => {
 									return (
 										<Box className={"fileCard"}>
-											<h1>thumbnail:{file["thumbnail"]}</h1>
+											{ file["thumbnail"] !== null  && file["thumbnail"] !== undefined ?
+												<img src={file["thumbnail"]} alt="thumbnail"/>
+												:
+												<></>
+											}
 											<Button color="inherit"
-													onClick={() => selectFile(file["id"])}>{file["filename"]}</Button>
+													onClick={() => selectFile(file["id"])}>
+												{file["filename"]}</Button>
 											<Typography>{file["size"]}</Typography>
 											<Typography>{file["data-created"]}</Typography>
 											<Typography>{file["filePath"]}</Typography>

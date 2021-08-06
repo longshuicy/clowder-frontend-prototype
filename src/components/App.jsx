@@ -5,6 +5,8 @@ import {makeStyles} from "@material-ui/core/styles";
 import File from "./File";
 import Dataset from "./Dataset";
 import {fetchFileMetadata} from "../utils/file";
+import {downloadThumbnail} from "../utils/thumbnail";
+
 
 const useStyles = makeStyles((theme) => ({
 
@@ -57,7 +59,12 @@ export default function App(props) {
 
 				// add thumbnails to list of files
 				let fileInfo = fileInDataset;
-				fileInfo["thumbnail"] = fileMetadata["thumbnail"];
+				if (fileMetadata["thumbnail"] !== null && fileMetadata["thumbnail"] !== undefined){
+					let thumbnailURL = await downloadThumbnail(fileMetadata["thumbnail"]);
+					if (thumbnailURL !== null){
+						fileInfo["thumbnail"] = thumbnailURL;
+					}
+				}
 				setAllFiles(allFiles => [ ...allFiles, fileInfo]);
 			});
 		}
