@@ -43,29 +43,30 @@ export default function Dataset(props) {
 						</Tabs>
 					</AppBar>
 					<TabPanel value={selectedTabIndex} index={0}>
+
 						{
-							files !== undefined && files.length > 0 && thumbnails !== undefined ?
+							files !== undefined && files.length > 0 && thumbnails !== undefined && thumbnails.length > 0?
 								files.map((file) => {
-									thumbnails.map((thumbnail) =>{
-										if (file["id"] === thumbnail["id"]){
-											return (
-												<Box className={"fileCard"}>
-													{ thumbnail["thumbnail"] !== null  && thumbnail["thumbnail"] !== undefined ?
-														<img src={thumbnail["thumbnail"]} alt="thumbnail"/>
-														:
-														<></>
-													}
-													<Button color="inherit"
-															onClick={() => selectFile(file["id"])}>
-														{file["filename"]}</Button>
-													<Typography>{file["size"]}</Typography>
-													<Typography>{file["data-created"]}</Typography>
-													<Typography>{file["filePath"]}</Typography>
-													<Typography>{file["contentType"]}</Typography>
-												</Box>
-											)
+									let thumbnailComp = null;
+									thumbnails.map((thumbnail) => {
+										if (file["id"] !== undefined && thumbnail["id"] !== undefined &&
+											thumbnail["thumbnail"] !== null && thumbnail["thumbnail"] !== undefined &&
+											file["id"] === thumbnail["id"]) {
+											thumbnailComp = <img src={thumbnail["thumbnail"]} alt="thumbnail"/>;
 										}
-									})
+									});
+									return (
+										<Box className="fileCard">
+											{thumbnailComp}
+											<Button color="inherit"
+													onClick={() => selectFile(file["id"])}>
+												{file["filename"]}</Button>
+											<Typography>{file["size"]}</Typography>
+											<Typography>{file["date-created"]}</Typography>
+											<Typography>{file["filepath"]}</Typography>
+											<Typography>{file["contentType"]}</Typography>
+										</Box>
+									);
 								})
 								:
 								<></>

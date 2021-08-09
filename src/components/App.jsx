@@ -47,28 +47,28 @@ export default function App(props) {
 
 	// get metadata of each files; because we need the thumbnail of each file!!!
 	useEffect(() => {
-		if (filesInDataset !== undefined && filesInDataset.length > 0){
-			// empty list
-			setFileMetadataList([]);
-			setThumbnailList([]);
 
-			filesInDataset.map(async (fileInDataset) => {
-				let fileMetadata = await fetchFileMetadata(fileInDataset["id"]);
-				setFileMetadataList(fileMetadataList => [
-					...fileMetadataList, {"id":fileInDataset["id"], "metadata": fileMetadata}
-				]);
+		(async () => {
+			if (filesInDataset !== undefined && filesInDataset.length > 0){
 
-				// add thumbnails
-				if (fileMetadata["thumbnail"] !== null && fileMetadata["thumbnail"] !== undefined){
-					let thumbnailURL = await downloadThumbnail(fileMetadata["thumbnail"]);
-					if (thumbnailURL !== null){
-						setThumbnailList(thumbnailList => [...thumbnailList,
-							{"id":fileInDataset["id"], "thumbnail": thumbnailURL}
-							]);
+				let fileMetadataListTemp = [];
+				let thumbnailListTemp = [];
+				await Promise.all(filesInDataset.map(async (fileInDataset) => {
+
+					let fileMetadata = await fetchFileMetadata(fileInDataset["id"]);
+
+					// add thumbnails
+					if (fileMetadata["thumbnail"] !== null && fileMetadata["thumbnail"] !== undefined){
+						let thumbnailURL = await downloadThumbnail(fileMetadata["thumbnail"]);
+						fileMetadataListTemp.push({"id":fileInDataset["id"], "metadata": fileMetadata, "thumbnail": thumbnailURL});
+						thumbnailListTemp.push({"id":fileInDataset["id"], "thumbnail": thumbnailURL})
 					}
-				}
-			});
-		}
+				}));
+
+				setFileMetadataList(fileMetadataListTemp);
+				setThumbnailList(thumbnailListTemp);
+			}
+		})();
 	}, [filesInDataset])
 
 	const selectFile = (selectedFileId) => {
