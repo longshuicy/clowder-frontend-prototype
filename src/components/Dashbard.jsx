@@ -66,8 +66,7 @@ export default function Dashboard(props) {
 					<TabPanel value={selectedTabIndex} index={0}>
 
 						{
-							datasets !== undefined && datasets.length > 0 && thumbnails !== undefined && thumbnails.length > 0
-								?
+							datasets !== undefined && thumbnails !== undefined ?
 								datasets.map((dataset) => {
 									let thumbnailComp = <BusinessCenterIcon className={classes.fileCardImg}
 																		 style={{fontSize: "5em"}}/>;

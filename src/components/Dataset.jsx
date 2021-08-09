@@ -68,8 +68,7 @@ export default function Dataset(props) {
 					<TabPanel value={selectedTabIndex} index={0}>
 
 						{
-							files !== undefined && files.length > 0 && thumbnails !== undefined && thumbnails.length > 0
-								?
+							files !== undefined && thumbnails !== undefined ?
 								files.map((file) => {
 									let thumbnailComp = <DescriptionIcon className={classes.fileCardImg}
 																		 style={{fontSize: "5em"}}/>;
@@ -89,7 +88,7 @@ export default function Dataset(props) {
 											</Grid>
 											<Grid item xl={10} lg={10} md={10} sm={10} xs={12}>
 												<Box className={classes.fileCardText}>
-													<Typography>File name: {file["name"]}</Typography>
+													<Typography>File name: {file["filename"]}</Typography>
 													<Typography>File size: {file["size"]}</Typography>
 													<Typography>Created on: {file["date-created"]}</Typography>
 													<Typography>Content type: {file["contentType"]}</Typography>

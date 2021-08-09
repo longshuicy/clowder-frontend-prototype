@@ -11,7 +11,7 @@ export function receiveFilesInDataset(type, json){
 		});
 	};
 }
-export function fetchFilesInDataset(id="610d54a15e0e9253e65863f8"){
+export function fetchFilesInDataset(id){
 	let url = `${config.hostname}/clowder/api/datasets/${id}/files?superAdmin=true`;
 	return (dispatch) => {
 		return fetch(url, {mode:"cors", headers: getHeader()})
@@ -38,7 +38,7 @@ export function receiveDatasetAbout(type, json){
 		});
 	};
 }
-export function fetchDatasetAbout(id="610d54a15e0e9253e65863f8"){
+export function fetchDatasetAbout(id){
 	let url = `${config.hostname}/clowder/api/datasets/${id}?superAdmin=true`;
 	return (dispatch) => {
 		return fetch(url, {mode:"cors", headers: getHeader()})
@@ -65,7 +65,7 @@ export function receiveDatasets(type, json){
 		});
 	};
 }
-export function fetchDatasets(id="610d54a15e0e9253e65863f8"){
+export function fetchDatasets(id){
 	let url = `${config.hostname}/clowder/api/datasets?superAdmin=true`;
 	return (dispatch) => {
 		return fetch(url, {mode:"cors", headers: getHeader()})

@@ -77,15 +77,11 @@ export default function App(props) {
 				await Promise.all(filesInDataset.map(async (fileInDataset) => {
 
 					let fileMetadata = await fetchFileMetadata(fileInDataset["id"]);
+					fileMetadataListTemp.push({"id": fileInDataset["id"], "metadata": fileMetadata});
 
 					// add thumbnails
 					if (fileMetadata["thumbnail"] !== null && fileMetadata["thumbnail"] !== undefined) {
 						let thumbnailURL = await downloadThumbnail(fileMetadata["thumbnail"]);
-						fileMetadataListTemp.push({
-							"id": fileInDataset["id"],
-							"metadata": fileMetadata,
-							"thumbnail": thumbnailURL
-						});
 						fileThumbnailListTemp.push({"id": fileInDataset["id"], "thumbnail": thumbnailURL})
 					}
 				}));
@@ -129,7 +125,7 @@ export default function App(props) {
 							return <Dataset files={filesInDataset} selectFile={selectFile}
 											thumbnails={fileThumbnailList} about={datasetAbout}/>
 						} else {
-							fileMetadataList.map((fileMetadata) => {
+							return fileMetadataList.map((fileMetadata) => {
 								if (selectedFileId === fileMetadata["id"]) {
 									return (
 										<File fileMetadata={fileMetadata["metadata"]}
@@ -138,6 +134,9 @@ export default function App(props) {
 											  filePreviews={filePreviews}
 											  fileId={selectedFileId}/>
 									)
+								}
+								else{
+									return <></>;
 								}
 							});
 						}
