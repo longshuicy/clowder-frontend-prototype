@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {AppBar, Box, Button, Divider, Grid, ListItem, Tab, Tabs, Typography} from "@material-ui/core";
+import {AppBar, Box, Link, Divider, Grid, ListItem, Tab, Tabs, Typography} from "@material-ui/core";
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 
 const useStyles = makeStyles((theme) => ({
@@ -104,41 +104,24 @@ export default function Dashboard(props) {
 					<TabPanel value={selectedTabIndex} index={4}></TabPanel>
 				</Grid>
 				<Grid item lg={4} md={4} xl={4} sm={4} xs={12}>
-				{/*	{*/}
-				{/*		about !== undefined ?*/}
-				{/*			<Box className="infoCard">*/}
-				{/*				<Typography className="title">About</Typography>*/}
-				{/*				<Typography className="content">Owner: {about["authorId"]}</Typography>*/}
-				{/*				<Typography className="content">Description: {about["description"]}</Typography>*/}
-				{/*				<Typography className="content">Created on: {about["created"]}</Typography>*/}
-								{/*/!*TODO use this to get thumbnail*!/*/}
-				{/*				<Typography className="content">Thumbnail: {about["thumbnail"]}</Typography>*/}
-				{/*				/!*<Typography className="content">Belongs to spaces: {about["authorId"]}</Typography>*!/*/}
-								{/*/!*TODO not sure how to use this info*!/*/}
-				{/*				/!*<Typography className="content">Resource type: {about["resource_type"]}</Typography>*!/*/}
-				{/*			</Box> : <></>*/}
-				{/*	}*/}
-				{/*	<Divider light/>*/}
-				{/*	<Box className="infoCard">*/}
-				{/*		<Typography className="title">Statistics</Typography>*/}
-				{/*		<Typography className="content">Views: 10</Typography>*/}
-				{/*		<Typography className="content">Last viewed: Jun 07, 2021 21:49:09</Typography>*/}
-				{/*		<Typography className="content">Downloads: 0</Typography>*/}
-				{/*		<Typography className="content">Last downloaded: Never</Typography>*/}
-				{/*	</Box>*/}
-				{/*	<Divider light/>*/}
-				{/*	<Box className="infoCard">*/}
-				{/*		<Typography className="title">Tags</Typography>*/}
-				{/*		<Grid container spacing={4}>*/}
-				{/*			<Grid item lg={8} sm={8} xl={8} xs={12}>*/}
-				{/*				<ClowderInput defaultValue="Tag"/>*/}
-				{/*			</Grid>*/}
-				{/*			<Grid item lg={4} sm={4} xl={4} xs={12}>*/}
-				{/*				<ClowderButton>Search</ClowderButton>*/}
-				{/*			</Grid>*/}
-				{/*		</Grid>*/}
-				{/*	</Box>*/}
-				{/*	<Divider light/>*/}
+					<Box className="actionCard">
+						<Typography className="title">Create your dataset</Typography>
+						<Typography className="content">Some quick example text to tell users why they should upload
+							their own data</Typography>
+						<Link href="" className="link">Create Dataset</Link>
+					</Box>
+					<Box className="actionCard">
+						<Typography className="title">Explore more dataset</Typography>
+						<Typography className="content">Some quick example text to tell users why they should follow
+							more people</Typography>
+						<Link href="" className="link">Go to Explore</Link>
+					</Box>
+					<Box className="actionCard">
+						<Typography className="title">Want to learn more about Clowder?</Typography>
+						<Typography className="content">Some quick example text to tell users why they should read
+							the tutorial</Typography>
+						<Link href="" className="link">Show me Tutorial</Link>
+					</Box>
 				</Grid>
 			</Grid>
 		</div>
