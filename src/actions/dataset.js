@@ -54,3 +54,30 @@ export function fetchDatasetAbout(id="610d54a15e0e9253e65863f8"){
 		});
 	};
 }
+
+export const RECEIVE_DATASETS = "RECEIVE_DATASETS";
+export function receiveDatasets(type, json){
+	return (dispatch) => {
+		dispatch({
+			type: type,
+			datasets: json,
+			receivedAt: Date.now(),
+		});
+	};
+}
+export function fetchDatasets(id="610d54a15e0e9253e65863f8"){
+	let url = `${config.hostname}/clowder/api/datasets?superAdmin=true`;
+	return (dispatch) => {
+		return fetch(url, {mode:"cors", headers: getHeader()})
+		.then((response) => {
+			if (response.status === 200) {
+				response.json().then(json =>{
+					dispatch(receiveDatasets(RECEIVE_DATASETS, json));
+				});
+			}
+			else {
+				dispatch(receiveDatasets(RECEIVE_DATASETS, []));
+			}
+		});
+	};
+}
