@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {AppBar, Box, Button, Divider, Grid, ListItem, Tab, Tabs, Typography} from "@material-ui/core";
-import DescriptionIcon from '@material-ui/icons/Description';
+import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -69,7 +69,7 @@ export default function Dashboard(props) {
 							datasets !== undefined && datasets.length > 0 && thumbnails !== undefined && thumbnails.length > 0
 								?
 								datasets.map((dataset) => {
-									let thumbnailComp = <DescriptionIcon className={classes.fileCardImg}
+									let thumbnailComp = <BusinessCenterIcon className={classes.fileCardImg}
 																		 style={{fontSize: "5em"}}/>;
 									thumbnails.map((thumbnail) => {
 										if (dataset["id"] !== undefined && thumbnail["id"] !== undefined &&
