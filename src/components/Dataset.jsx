@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {AppBar, Box, Button, Divider, Grid, Tab, Tabs, Typography} from "@material-ui/core";
+import {AppBar, Box, Button, Divider, Grid, ListItem, Tab, Tabs, Typography} from "@material-ui/core";
 import {ClowderInput} from "./styledComponents/ClowderInput";
 import {ClowderButton} from "./styledComponents/ClowderButton";
 import DescriptionIcon from '@material-ui/icons/Description';
@@ -55,7 +55,7 @@ export default function Dataset(props) {
 	return (
 		<div className="inner-container">
 			<Grid container spacing={4}>
-				<Grid item lg={8} xl={8} md={8} sm={12} xs={12}>
+				<Grid item lg={8} xl={8} md={8} sm={8} xs={12}>
 					<AppBar className={classes.appBar} position="static">
 						<Tabs value={selectedTabIndex} onChange={handleTabChange} aria-label="file tabs">
 							<Tab className={classes.tab} label="Files" {...a11yProps(0)} />
@@ -68,7 +68,8 @@ export default function Dataset(props) {
 					<TabPanel value={selectedTabIndex} index={0}>
 
 						{
-							files !== undefined && files.length > 0 && thumbnails !== undefined && thumbnails.length > 0?
+							files !== undefined && files.length > 0 && thumbnails !== undefined && thumbnails.length > 0
+								?
 								files.map((file) => {
 									let thumbnailComp = <DescriptionIcon className={classes.fileCardImg} style={{fontSize:"5em"}}/>;
 									thumbnails.map((thumbnail) => {
@@ -80,21 +81,19 @@ export default function Dataset(props) {
 										}
 									});
 									return (
-										<Grid container spacing={1} className={classes.fileCard}>
+										<ListItem button className={classes.fileCard} key={file["id"]}
+												  onClick={() =>selectFile(file["id"])}>
 											<Grid item xl={2} lg={2} md={2} sm={2} xs={12}>
 												{thumbnailComp}
 											</Grid>
 											<Grid item xl={10} lg={10} md={10} sm={10} xs={12}>
-												{/*<Button color="inherit"*/}
-												{/*		onClick={() => selectFile(file["id"])}>*/}
-												{/*	{file["filename"]}</Button>*/}
 												<Box className={classes.fileCardText}>
 													<Typography>File Size: {file["size"]}</Typography>
 													<Typography>Created on: {file["date-created"]}</Typography>
 													<Typography>Content type: {file["contentType"]}</Typography>
 												</Box>
 											</Grid>
-										</Grid>
+										</ListItem>
 									);
 								})
 								:
@@ -106,7 +105,7 @@ export default function Dataset(props) {
 					<TabPanel value={selectedTabIndex} index={3}></TabPanel>
 					<TabPanel value={selectedTabIndex} index={4}></TabPanel>
 				</Grid>
-				<Grid item lg={4} md={4} xl={4} sm={12} xs={12}>
+				<Grid item lg={4} md={4} xl={4} sm={4} xs={12}>
 					{
 						about !== undefined ?
 							<Box className="infoCard">
