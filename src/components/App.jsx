@@ -20,7 +20,13 @@ export default function App(props) {
 	const [fileThumbnailList, setFileThumbnailList] = useState([]);
 	const [datasetThumbnailList, setDatasetThumbnailList] = useState([]);
 
-	const [paths, setPaths] = useState(["explore", "collection", "dataset", ""]);
+	const [paths, setPaths] = useState([
+		{
+			"name":"Explore",
+			"id": null,
+			"type":"explore"
+		}
+	]);
 
 	const {
 		// files
@@ -42,11 +48,6 @@ export default function App(props) {
 	useEffect(() => {
 		listDatasets();
 	}, []);
-
-	// // set breadcrumbs
-	// useEffect(() => {
-	// 	setPaths(paths => [...paths.slice(0, paths.length - 1), fileMetadata["filename"]]);
-	// }, [fileMetadata]);
 
 	useEffect(() => {
 
@@ -99,6 +100,20 @@ export default function App(props) {
 		// load dataset information
 		listFilesInDataset(selectedDatasetId);
 		listDatasetAbout(selectedDatasetId);
+
+		// for breadcrumb
+		setPaths([
+			{
+				"name":"Explore",
+				"id": selectedDatasetId,
+				"type":"explore"
+			},
+			{
+				"name":"Dataset",
+				"id": selectedDatasetId,
+				"type":"dataset"
+			}
+		]);
 	}
 
 	const selectFile = (selectedFileId) => {
@@ -109,13 +124,47 @@ export default function App(props) {
 		listFileExtractedMetadata(selectedFileId);
 		listFileMetadataJsonld(selectedFileId);
 		listFilePreviews(selectedFileId);
+
+		// for breadcrumb
+		setPaths([
+			{
+				"name":"Explore",
+				"id": selectedDatasetId,
+				"type":"explore"
+			},
+			{
+				"name":"Dataset",
+				"id": selectedDatasetId,
+				"type":"dataset"
+			},
+			{
+				"name":"File",
+				"id": selectedFileId,
+				"type":"file"
+			}
+		]);
+	}
+
+	const goToPath = (pathType, id) => {
+		if (pathType === "dataset"){
+			setSelectedDatasetId(id);
+			setSelectedFileId("");
+		}
+		else if (pathType === "file"){
+			setSelectedDatasetId(selectedDatasetId);
+			setSelectedFileId(id);
+		}
+		else{
+			setSelectedDatasetId("");
+			setSelectedFileId("");
+		}
 	}
 
 	return (
 		<div>
 			<TopBar/>
 			<div className="outer-container">
-				<Breadcrumbs paths={paths}/>
+				<Breadcrumbs paths={paths} goToPath={goToPath}/>
 				{
 					(() => {
 						if (selectedDatasetId === "") {
