@@ -4,6 +4,7 @@ import {AppBar, Box, Divider, Grid, Tab, Tabs, Typography} from "@material-ui/co
 import {makeStyles} from "@material-ui/core/styles";
 import {ClowderInput} from "./styledComponents/ClowderInput";
 import {ClowderButton} from "./styledComponents/ClowderButton";
+import Audio from "./previewers/Audio";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -86,6 +87,7 @@ export default function File(props) {
 							</Tabs>
 						</AppBar>
 						<TabPanel value={selectedTabIndex} index={0}>
+							<Audio />
 							{
 								filePreviews !== undefined && filePreviews.length > 0 && filePreviews[0].previews !== undefined
 									?
