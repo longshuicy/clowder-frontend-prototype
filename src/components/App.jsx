@@ -20,13 +20,7 @@ export default function App(props) {
 	const [fileThumbnailList, setFileThumbnailList] = useState([]);
 	const [datasetThumbnailList, setDatasetThumbnailList] = useState([]);
 
-	const [paths, setPaths] = useState([
-		{
-			"name":"Explore",
-			"id": null,
-			"type":"explore"
-		}
-	]);
+	const [paths, setPaths] = useState([]);
 
 	const {
 		// files
@@ -102,14 +96,13 @@ export default function App(props) {
 		listDatasetAbout(selectedDatasetId);
 
 		// for breadcrumb
+		let datasetName = selectedDatasetId;
+		datasets.map(dataset =>{
+			if (dataset["id"] === selectedDatasetId) datasetName = dataset["name"];
+		});
 		setPaths([
 			{
-				"name":"Explore",
-				"id": selectedDatasetId,
-				"type":"explore"
-			},
-			{
-				"name":"Dataset",
+				"name":datasetName,
 				"id": selectedDatasetId,
 				"type":"dataset"
 			}
@@ -126,19 +119,23 @@ export default function App(props) {
 		listFilePreviews(selectedFileId);
 
 		// for breadcrumb
+		let datasetName = selectedDatasetId;
+		datasets.map(dataset =>{
+			if (dataset["id"] === selectedDatasetId) datasetName = dataset["name"];
+		});
+		let fileName = selectedFileId;
+		filesInDataset.map(file =>{
+			if (file["id"] === selectedFileId) fileName = file["filename"];
+		});
+
 		setPaths([
 			{
-				"name":"Explore",
-				"id": selectedDatasetId,
-				"type":"explore"
-			},
-			{
-				"name":"Dataset",
+				"name":datasetName,
 				"id": selectedDatasetId,
 				"type":"dataset"
 			},
 			{
-				"name":"File",
+				"name":fileName,
 				"id": selectedFileId,
 				"type":"file"
 			}
@@ -149,14 +146,21 @@ export default function App(props) {
 		if (pathType === "dataset"){
 			setSelectedDatasetId(id);
 			setSelectedFileId("");
-		}
-		else if (pathType === "file"){
-			setSelectedDatasetId(selectedDatasetId);
-			setSelectedFileId(id);
+
+			let datasetName = id;
+			datasets.map((dataset)=>{ if (dataset["id"] === id) datasetName = dataset["name"]});
+			setPaths([
+				{
+					"name": datasetName,
+					"id": id,
+					"type":"dataset"
+				},
+			]);
 		}
 		else{
 			setSelectedDatasetId("");
 			setSelectedFileId("");
+			setPaths([]);
 		}
 	}
 

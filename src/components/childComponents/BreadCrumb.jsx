@@ -32,23 +32,23 @@ export default function Breadcrumbs(props) {
 	return (
 		<div>
 			<MuiBreadcrumbs className={classes.breadCrumb} aria-label="breadcrumb">
-				{
-					paths.map((path, index) => {
-						if (index !== paths.length -1){
-							return (<Button color="inherit" className={classes.breadCrumbLink}
-										  onClick={() => goToPath(path["type"], path["id"])}
-							>{path["name"]}</Button>);
-						}
-						else{
-							return (<Button color="inherit" className={classes.breadCrumbText}
-										  onClick={() => goToPath(path["type"], path["id"])}>
-								{path["name"]}</Button>);
-						}
-					})
-				}
+				<MuiBreadcrumbs className={classes.breadCrumb} aria-label="breadcrumb">
+					<Link color="inherit" className={classes.breadCrumbLink} href="">Explore</Link>
+					{
+						paths.map((path, index) => {
+							if (index !== paths.length -1){
+								return (<Link className={classes.breadCrumbLink}
+												onClick={() => goToPath(path["type"], path["id"])}>{path["name"]}
+								</Link>);
+							}
+							else{
+								return (<Typography className={classes.breadCrumbText}>{path["name"]}</Typography>);
+							}
+						})
+					}
+				</MuiBreadcrumbs>
 			</MuiBreadcrumbs>
 			<Divider light />
 		</div>
-
 	);
 }
