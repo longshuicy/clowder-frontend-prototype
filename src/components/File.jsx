@@ -7,6 +7,7 @@ import {ClowderButton} from "./styledComponents/ClowderButton";
 import Audio from "./previewers/Audio";
 import Video from "./previewers/Video";
 import {downloadResource} from "../utils/common";
+import Thumbnail from "./previewers/Thumbnail";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -91,6 +92,10 @@ export default function File(props) {
 									}
 									else if (preview["previewType"] === "video"){
 										return <Video fileId={preview["fileid"]} videoSrc={preview["resource"]} />;
+									}
+									else if (preview["previewType"] === "thumbnail"){
+										return <Thumbnail fileId={preview["fileid"]} fileType={preview["fileType"]}
+														  imgSrc={preview["resource"]} />;
 									}
 								})
 							}
