@@ -21,6 +21,7 @@ export default function App(props) {
 	const [datasetThumbnailList, setDatasetThumbnailList] = useState([]);
 	const [lastDataset, setLastDataset] = useState([]);
 	const [firstDataset, setFirstDataset] = useState([]);
+	const [limit, setLimit] = useState(5);
 
 	const [paths, setPaths] = useState([]);
 
@@ -42,7 +43,7 @@ export default function App(props) {
 
 	// component did mount
 	useEffect(() => {
-		listDatasets();
+		listDatasets(null, null, limit);
 	}, []);
 
 	useEffect(() => {
@@ -96,13 +97,12 @@ export default function App(props) {
 	const previous = () => {
 
 		let date = firstDataset["created"] !== undefined? new Date(lastDataset["created"]) : null;
-
-		if (date) listDatasets("b", date.toISOString(), 12);
+		if (date) listDatasets("b", date.toISOString(), limit);
 	}
 
 	const next = () => {
 		let date = lastDataset["created"] !== undefined? new Date(lastDataset["created"]) : null;
-		if (date) listDatasets("a", date.toISOString(), 12);
+		if (date) listDatasets("a", date.toISOString(), limit);
 	}
 
 	const selectDataset = (selectedDatasetId) => {

@@ -65,9 +65,10 @@ export function receiveDatasets(type, json){
 		});
 	};
 }
-export function fetchDatasets(when="a", date, limit="11"){
-	let url = `${config.hostname}/clowder/api/datasets?superAdmin=true&limit=${limit}&when=${when}`;
+export function fetchDatasets(when, date, limit="5"){
+	let url = `${config.hostname}/clowder/api/datasets?superAdmin=true&limit=${limit}`;
 	if (date) url = `${url}&date=${date}`;
+	if (when) url = `${url}&when=${when}`;
 	return (dispatch) => {
 		return fetch(url, {mode:"cors", headers: getHeader()})
 		.then((response) => {
