@@ -95,8 +95,7 @@ export default function App(props) {
 	}, [filesInDataset])
 
 	const previous = () => {
-
-		let date = firstDataset["created"] !== undefined? new Date(lastDataset["created"]) : null;
+		let date = firstDataset["created"] !== undefined? new Date(firstDataset["created"]) : null;
 		if (date) listDatasets("b", date.toISOString(), limit);
 	}
 
