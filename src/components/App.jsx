@@ -19,6 +19,8 @@ export default function App(props) {
 	const [fileMetadataList, setFileMetadataList] = useState([]);
 	const [fileThumbnailList, setFileThumbnailList] = useState([]);
 	const [datasetThumbnailList, setDatasetThumbnailList] = useState([]);
+	const [lastDataset, setLastDataset] = useState([]);
+	const [firstDataset, setFirstDataset] = useState([]);
 
 	const [paths, setPaths] = useState([]);
 
@@ -56,6 +58,11 @@ export default function App(props) {
 					}
 				}));
 				setDatasetThumbnailList(datasetThumbnailListTemp);
+
+				// find last and first dataset for pagination
+				setFirstDataset(datasets[0])
+				setLastDataset(datasets[datasets.length - 1]);
+
 			}
 		})();
 	}, [datasets])
@@ -85,6 +92,18 @@ export default function App(props) {
 			}
 		})();
 	}, [filesInDataset])
+
+	const previous = () => {
+
+		let date = firstDataset["created"] !== undefined? new Date(lastDataset["created"]) : null;
+
+		if (date) listDatasets("b", date.toISOString(), 12);
+	}
+
+	const next = () => {
+		let date = lastDataset["created"] !== undefined? new Date(lastDataset["created"]) : null;
+		if (date) listDatasets("a", date.toISOString(), 12);
+	}
 
 	const selectDataset = (selectedDatasetId) => {
 		// pass that id to dataset component
@@ -172,7 +191,10 @@ export default function App(props) {
 					(() => {
 						if (selectedDatasetId === "") {
 							return <Dashboard datasets={datasets} selectDataset={selectDataset}
-											  thumbnails={datasetThumbnailList}/>
+											  thumbnails={datasetThumbnailList}
+											  previous={previous}
+											  next={next}
+							/>
 						} else if (selectedFileId === "") {
 							return <Dataset files={filesInDataset} selectFile={selectFile}
 											thumbnails={fileThumbnailList} about={datasetAbout}/>
